@@ -24,13 +24,11 @@ class TimeController {
 
   updateState(timezone) {
     timezone = timezone.toLowerCase();
-    console.log(timezone);
     let parts =  timezone.split("/");
     let i = 0;
     let zone = "";
     while(i < parts.length) {
       zone += parts[i];
-      console.log(i, zone);
       if (this.state.hasOwnProperty(zone)) {
         this.state[zone] += 1;
       } else {
@@ -48,7 +46,6 @@ class TimeController {
 
   async getTimeForLocation(location) {
     let uri = API_URL + location;
-    console.log('location', uri);
 
     let options = {method: 'GET', uri: uri};
     return request(options).then((response) => {

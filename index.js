@@ -28,7 +28,6 @@ bot.addListener("message", function(from, to, text, message) {
         handleTimeAtCommand(to, words);
         break;
       case '!timepopularity' :
-        console.log(words[0]);
         handleTimePopularityCommand(to, words);
         break;
       default:

@@ -1,5 +1,5 @@
 {
-  "channels": ["#dylansveryfirstchannel"],
+  "channels": ["#dylanstestingchatbotchannel"],
   "server": "irc.freenode.net",
-  "botName": "dmbot"
+  "botName": "timebotv1"
 }
