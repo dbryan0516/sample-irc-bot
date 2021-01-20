@@ -1,5 +1,6 @@
 const request = require("request-promise");
 const fs = require("fs");
+const timeservice = require('./timeService');
 
 const API_URL = process.env.TIME_API || "http://worldtimeapi.org/api/timezone/";
 const STATE_FILE_PATH  = process.env.STATE_FILE_PATH || "./timepopularity.json";
@@ -9,6 +10,7 @@ class TimeController {
   constructor() {
     this.months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
     this.state = this.getSavedState();
+    this.service = new timeservice();
   }
 
   getSavedState () {
@@ -27,12 +29,14 @@ class TimeController {
     let parts =  timezone.split("/");
     let i = 0;
     let zone = "";
-    while(i < parts.length) {
-      zone += parts[i];
+    while(i < parts.length) { // America/New_york
+      zone += parts[i]; // America/New_york
       if (this.state.hasOwnProperty(zone)) {
-        this.state[zone] += 1;
+        this.service.updateCount(location);
+        //this.state[zone] += 1;
       } else {
-        this.state[zone] = 1;
+        this.service.updateCount(location);
+        //this.state[zone] = 1;
       }
 
       zone += "/";
@@ -67,10 +71,7 @@ class TimeController {
 
   getPopularityForLocation(location) {
     location = location.toLowerCase();
-    if (this.state.hasOwnProperty(location)) {
-      return this.state[location];
-    }
-    return 0;
+    return this.service.getCount(location);
   }
 }
 
